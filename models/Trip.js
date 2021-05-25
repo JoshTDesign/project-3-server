@@ -12,9 +12,29 @@ Trip.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    location: {
+    city: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    lodgingType: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    lodgingUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    cost: {
+      type: DataTypes.DECIMAL,
+      allowNull: true
     },
     start_date: {
       type: DataTypes.DATEONLY,
