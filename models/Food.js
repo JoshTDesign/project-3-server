@@ -2,9 +2,9 @@ const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 const moment = require("moment");
 
-class Activity extends Model {}
+class Food extends Model {}
 
-Activity.init(
+Food.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,19 +12,19 @@ Activity.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    activityName: {
+    restaurantName: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    cuisine: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     address: {
-      type: DataTypes.STRING,
-      allowNull: true
+        type: DataTypes.STRING,
+        allowNull: true
     },
-    activityUrl: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    category: {
+    restaurantUrl: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -32,26 +32,22 @@ Activity.init(
       type: DataTypes.DECIMAL,
       allowNull: true,
     },
-    activity_date: {
-      type: DataTypes.DATEONLY,
+    reservation: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
+    reservation_date: {
+        type: DataTypes.DATEONLY,
       get: function () {
         return moment(this.getDataValue("reservation_date"))
         .format("ll");
       },
     },
-    start_time: {
+    reservation_time: {
       type: DataTypes.TIME,
       get: function () {
         return moment(
-          this.getDataValue("start_time"))
-          .format("hh:mm A");
-      },
-    },
-    end_time: {
-      type: DataTypes.TIME,
-      get: function () {
-        return moment(
-          this.getDataValue("end_time"))
+          this.getDataValue("reservationTime"))
           .format("hh:mm A");
       },
     },
@@ -75,8 +71,8 @@ Activity.init(
     timestamps: false,
     freezeTableName: true,
     underscore: true,
-    modelName: "activity",
+    modelName: "food",
   }
 );
 
-module.exports = Activity;
+module.exports = Food;
