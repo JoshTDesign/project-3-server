@@ -9,7 +9,8 @@ const tripData = [
         lodgingUrl: 'https://www.hilton.com/en/hotels/psppshf-hilton-palm-springs/?SEO_id=GMB-HF-PSPPSHF&y_source=1_MTIyMDg5MS03MTUtbG9jYXRpb24uZ29vZ2xlX3dlYnNpdGVfb3ZlcnJpZGU%3D',
         start_date: 'August 01, 2021',
         end_date: 'August 07, 2021',
-        image_path: ''
+        image_path: '',
+        creatorId: 1,
     },
     {
         city: 'New Orleans',
