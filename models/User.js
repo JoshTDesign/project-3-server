@@ -52,20 +52,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    trip_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "trip",
-        key: "id",
-      },
-    },
-    activities_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "activities",
-        key: "id",
-      },
-    },
   },
   {
     hooks: {

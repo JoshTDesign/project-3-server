@@ -1,16 +1,19 @@
 const User = require('./User');
 const Trip = require('./Trip');
 const Activity = require('./Activity');
-const Food = require('./Food');
 
-User.hasMany(Trip);
-Trip.hasMany(User);
+User.hasMany(Trip, {as: "creator"});
+Trip.belongsTo(User, {as: "creator"});
+Trip.belongsToMany(User, {
+        through: "tripUser"
+});
 
-Trip.hasMany(Activity);
+User.belongsToMany(Trip, {through: "tripUser"})
 Activity.belongsTo(Trip);
+Trip.hasMany(Activity);
+User.belongsToMany(Activity, {through: "userActivity"});
+Activity.belongsToMany(User, {through: "userActivity"});
 
-module.exports = {
-    User, 
-    Trip, 
-    Activity
-}
+User.belongsToMany(User, {as: "friend", through: "friends"});
+
+module.exports = {User, Trip, Activity}

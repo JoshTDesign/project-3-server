@@ -16,6 +16,15 @@ Activity.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    reservation: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     address: {
       type: DataTypes.STRING,
       allowNull: true
@@ -53,20 +62,6 @@ Activity.init(
         return moment(
           this.getDataValue("end_time"))
           .format("hh:mm A");
-      },
-    },
-    trip_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "trip",
-        key: "id",
-      },
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "user",
-        key: "id",
       },
     },
   },

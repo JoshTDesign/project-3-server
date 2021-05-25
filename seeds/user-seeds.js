@@ -8,6 +8,7 @@ const userData = [
         username: 'tinatorres123',
         password: 'password',
         image_path: '',
+        tripId: 2
     },
     {
         first_name: 'Willie',
