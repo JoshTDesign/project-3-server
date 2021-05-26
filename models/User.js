@@ -24,10 +24,9 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    username: {
+    location: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+      allowNull: true
     },
     email: {
       type: DataTypes.STRING,
@@ -36,6 +35,11 @@ User.init(
       validate: {
         isEmail: true,
       },
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -47,20 +51,6 @@ User.init(
     image_path: {
       type: DataTypes.STRING,
       allowNull: true,
-    },
-    trip_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "trip",
-        key: "id",
-      },
-    },
-    activities_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "activities",
-        key: "id",
-      },
     },
   },
   {

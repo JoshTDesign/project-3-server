@@ -12,54 +12,56 @@ Activity.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    flight: {
+    activityName: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    lodging: {
+    description: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    food: {
+    reservation: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    activityUrl: {
       type: DataTypes.STRING,
       allowNull: true,
-    },
-    beverage: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    additional_activities: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    start_time: {
-        type: DataTypes.TIME,
-        get: function() {
-            return moment(this.getDataValue('start_time'), "hh:mm:ss").format('hh:mm A');
-          }
-    },
-    end_time: {
-        type: DataTypes.TIME,
-        get: function() {
-            return moment(this.getDataValue('end_time'), "hh:mm:ss").format('hh:mm A');
-          }
     },
     category: {
-        type: DataTeypes.STRING,
-        allowNull: true
+      type: DataTypes.STRING,
+      allowNull: true,
     },
-    trip_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "trip",
-        key: "id",
+    cost: {
+      type: DataTypes.DECIMAL,
+      allowNull: true,
+    },
+    activity_date: {
+      type: DataTypes.DATEONLY,
+      get: function () {
+        return moment(this.getDataValue("reservation_date"))
+        .format("ll");
       },
     },
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "user",
-        key: "id",
+    start_time: {
+      type: DataTypes.TIME,
+      get: function () {
+        return moment(
+          this.getDataValue("start_time"))
+          .format("hh:mm A");
+      },
+    },
+    end_time: {
+      type: DataTypes.TIME,
+      get: function () {
+        return moment(
+          this.getDataValue("end_time"))
+          .format("hh:mm A");
       },
     },
   },

@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed": "node seeds/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,11 +20,13 @@
   },
   "homepage": "https://github.com/JoshTDesign/project-3-server#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "connect-session-sequelize": "^7.1.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "mapbox-gl": "^2.2.0",
     "moment": "^2.29.1",
     "mysql2": "^2.2.5",
     "path": "^0.12.7",
