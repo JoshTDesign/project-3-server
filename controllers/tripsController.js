@@ -3,7 +3,7 @@ const router = express.Router();
 const {Trip, Activity} = require('../models');
 const tokenAuth = require("../middleware/tokenAuth")
 
-router.get("/",(req,res)=>{
+router.get("/",tokenAuth,(req,res)=>{
     Trip.findAll(
         {include:[Activity]}
     ).then(trips=>{
@@ -14,7 +14,7 @@ router.get("/",(req,res)=>{
     })
 })
 
-router.get("/:id",(req,res)=>{
+router.get("/:id",tokenAuth,(req,res)=>{
     Trip.findOne({
         where:{
             id:req.params.id
