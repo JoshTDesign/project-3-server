@@ -39,13 +39,13 @@ Trip.init(
     start_date: {
       type: DataTypes.DATEONLY,
       get: function () {
-        return mockComponent(this.getDataValue("start_date")).format("ll");
+        return moment(this.getDataValue("start_date")).format("ll");
       },
     },
     end_date: {
       type: DataTypes.DATEONLY,
       get: function () {
-        return mockComponent(this.getDataValue("end_date")).format("ll");
+        return moment(this.getDataValue("end_date")).format("ll");
       },
     },
     image_path: {

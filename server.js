@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const routes = require('./routes');
+// const routes = require('./routes');
 const cors = require('cors');
 //const helpers = require('./utils/helpers');
 
@@ -22,7 +22,7 @@ const sess = {
 };
 
 app.use(session(sess));
-app.use(routes);
+// app.use(routes);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
