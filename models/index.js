@@ -5,7 +5,8 @@ const Activity = require('./Activity');
 User.hasMany(Trip, {as: "creator"});
 Trip.belongsTo(User, {as: "creator"});
 Trip.belongsToMany(User, {
-        through: "tripUser"
+        through: "tripUser",
+        as: "Trips"
 });
 
 User.belongsToMany(Trip, {through: "tripUser"})
