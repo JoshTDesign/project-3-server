@@ -67,6 +67,19 @@ router.get("/secretclub", tokenAuth,(req, res) => {
     res.json(req.user);
 })
 
+router.get("/profile",tokenAuth,(req,res)=>{
+    User.findOne({
+        where:{
+            id:req.user.id
+        }
+    }).then(userData=>{
+        res.json(userData)
+    }).catch(err=>{
+        console.log(err);
+        req.status(500).json({message:"error",err})
+    })
+})
+
 
 router.get("/dashboard",tokenAuth, (req, res) => {
 

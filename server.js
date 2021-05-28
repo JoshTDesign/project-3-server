@@ -39,7 +39,7 @@ var express = require('express');
 var app = express();
 var PORT = process.env.PORT || 3001;
 var allRoutes = require('./controllers');
-const cors = require("cors")
+const cors = require("cors");
 
 // Requiring our models for syncing
 var sequelize = require('./config/connection.js');
