@@ -81,7 +81,7 @@ router.get("/profile",tokenAuth,(req,res)=>{
 })
 
 
-router.get("/dashboard",tokenAuth, (req, res) => {
+router.get("/dashboard/:id",tokenAuth, (req, res) => {
 
  Trip.findAll({
             include: [
@@ -89,7 +89,7 @@ router.get("/dashboard",tokenAuth, (req, res) => {
                     model: User,
                     through: {
                         where: {
-                            user_id: 1,
+                            user_id: req.params.id,
                         }
                     },
                     as: "Trips",
