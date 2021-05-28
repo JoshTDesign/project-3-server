@@ -3,6 +3,7 @@ const router = express.Router();
 const userRoutes = require('./usersController');
 const tripsRoutes = require('./tripsController');
 const activitiesRoutes = require('./activitesController');
+const accessRoutes = require('./accessController');
 
 
 router.get('/', (req, res) => {
@@ -13,4 +14,5 @@ router.get('/', (req, res) => {
 router.use(userRoutes);
 router.use("/api/trips", tripsRoutes);
 router.use("/api/activities", activitiesRoutes);
+router.use("/api/access", accessRoutes);
 module.exports = router;

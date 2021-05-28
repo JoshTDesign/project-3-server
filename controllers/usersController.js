@@ -63,7 +63,12 @@ router.post("/login", (req, res) => {
     })
 })
 
+<<<<<<< HEAD
 router.get("/dashboard",tokenAuth, (req, res) => {
+=======
+
+router.get("/dashboard/:id",tokenAuth, (req, res) => {
+>>>>>>> develop
 
  Trip.findAll({
             include: [
@@ -71,7 +76,7 @@ router.get("/dashboard",tokenAuth, (req, res) => {
                     model: User,
                     through: {
                         where: {
-                            user_id: 1,
+                            user_id: req.params.id,
                         }
                     },
                     as: "Trips",
