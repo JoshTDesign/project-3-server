@@ -57,16 +57,11 @@ router.post("/login", (req, res) => {
             res.json({token, user })
         }
     })
-    // .catch(err => {
-    //     console.log(err);
-    //     res.status(500).json({ message: "an error occured", err })
-    // })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: "an error occured", err })
+    })
 })
-
-router.get("/secretclub", tokenAuth,(req, res) => {
-    res.json(req.user);
-})
-
 
 router.get("/dashboard",tokenAuth, (req, res) => {
 
