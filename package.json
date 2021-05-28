@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/JoshTDesign/project-3-server#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "connect-session-sequelize": "^7.1.1",
     "cors": "^2.8.5",
