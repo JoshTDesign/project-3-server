@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const userRoutes = require('./usersController');
-// const tripsRoutes = require('./tripsContoller');
-// const activitiesRoutes = require('./activitiesContoller');
+const tripsRoutes = require('./tripsController');
+const activitiesRoutes = require('./activitesController');
 
 
 router.get('/', (req, res) => {
@@ -11,6 +11,6 @@ router.get('/', (req, res) => {
 });
 
 router.use(userRoutes);
-// router.use("/api/trips", tripsRoutes);
-// router.use("/api/activities", activitiesRoutes);
+router.use("/api/trips", tripsRoutes);
+router.use("/api/activities", activitiesRoutes);
 module.exports = router;
