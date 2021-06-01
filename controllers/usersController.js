@@ -96,7 +96,6 @@ router.get("/dashboard",tokenAuth, (req, res) => {
 
 })
 
-
 router.get("/dashboard/:id", tokenAuth, (req, res) => {
     Trip.findAll({
         include: [
@@ -111,6 +110,9 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
             },  
             {model: Activity},
         ],
+
+    })
+    });
 
 //TODO: add token auth, none currently for insomnia testing
 router.get("/friends/:id", (req, res) =>{
@@ -139,7 +141,6 @@ router.get("/friends/:id", (req, res) =>{
 
 module.exports = router;
 
-})
 
 //TODO: add token auth, none currently for insomnia testing
 // router.post("/friends/:miyid/:friendid", (req, res) =>{
