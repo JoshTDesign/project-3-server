@@ -71,7 +71,16 @@ router.post("/login", (req, res) => {
     // })
 })
 
-router.get("/dashboard/:id",tokenAuth, (req, res) => {
+router.get("/secretclub", tokenAuth,(req, res) => {
+    res.json(req.user);
+});
+
+router.get("/profile", tokenAuth, (req, res) => {
+    res.json(req.user)
+});
+
+router.get("/dashboard",tokenAuth, (req, res) => {
+
 
  Trip.findAll({
             include: [
@@ -94,6 +103,23 @@ router.get("/dashboard/:id",tokenAuth, (req, res) => {
         })
 
 })
+
+
+router.get("/dashboard/:id", tokenAuth, (req, res) => {
+    Trip.findAll({
+        include: [
+            {
+                model: User,
+                through: {
+                    where: {
+                        user_id: req.params.id,
+                    }
+                },
+                as: "Trips",
+            },  
+            {model: Activity},
+        ],
+
 //TODO: add token auth, none currently for insomnia testing
 router.get("/friends/:id", (req, res) =>{
 
@@ -110,12 +136,17 @@ router.get("/friends/:id", (req, res) =>{
             },
             as: 'friend',
         }]
+      
     }).then(userData => {
         return res.json(userData);
     }).catch(err => {
         console.log(err);
         return res.status(403).json({message:"error", err});
     })
+});
+
+module.exports = router;
+
 })
 
 router.put("/profilepic/:id", (req, res) => {
