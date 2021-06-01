@@ -97,20 +97,21 @@ router.get("/dashboard",tokenAuth, (req, res) => {
 })
 
 router.get("/dashboard/:id", tokenAuth, (req, res) => {
-    Trip.findAll({
+    User.findOne({
+        where: {
+            id: req.params.id,
+        },
         include: [
-            {
-                model: User,
-                through: {
-                    where: {
-                        user_id: req.params.id,
-                    }
-                },
-                as: "Trips",
-            },  
-            {model: Activity},
-        ],
+           {model: Trip,
+            as: "creator"
+        }
+        ]
 
+    }).then(userData => {
+        return res.json(userData);
+    }).catch(err => {
+        console.log(err);
+        return res.status(403).json({message:"error", err});
     })
     });
 
