@@ -104,10 +104,13 @@ router.get("/dashboard",tokenAuth, (req, res) => {
 
 })
 
-
 router.get("/dashboard/:id", tokenAuth, (req, res) => {
-    Trip.findAll({
+    User.findOne({
+        where: {
+            id: req.params.id,
+        },
         include: [
+<<<<<<< HEAD
             {
                 model: User,
                 through: {
@@ -120,6 +123,20 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
             {model: Activity},
         ],})
     })
+=======
+           {model: Trip,
+            as: "creator"
+        }
+        ]
+
+    }).then(userData => {
+        return res.json(userData);
+    }).catch(err => {
+        console.log(err);
+        return res.status(403).json({message:"error", err});
+    })
+    });
+>>>>>>> 26074a6a50350e1045fe5d74067af3db3bc5320e
 
 //TODO: add token auth, none currently for insomnia testing
 router.get("/friends/:id", (req, res) =>{
