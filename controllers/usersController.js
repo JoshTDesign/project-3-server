@@ -4,6 +4,14 @@ const {User, Trip, Activity } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const tokenAuth = require('../middleware/tokenAuth');
+const cloudinary = require('cloudinary').v2;
+const env = require('dotenv')
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API,
+    api_secret: process.env.CLOUD_SECRET,
+})
 
 router.post("/signup", (req, res) => {
     User.create({
@@ -141,15 +149,40 @@ module.exports = router;
 
 })
 
-//TODO: add token auth, none currently for insomnia testing
-// router.post("/friends/:miyid/:friendid", (req, res) =>{
-// User.findOne({where: {id: req.params.myid}}).setfriend(req.params.friendid)
-// .then(userData => {
-//     return res.json(userData);
-// }).catch(err => {
-//     console.log(err);
-//     return res.status(403).json({message:"error", err});
-// })
-// })
-// module.exports = router;
+router.put("/profilepic/:id", (req, res) => {
+    console.log(req.body);
+    cloudinary.uploader.upload(req.body.image, {tags: 'profile_pic'}, function (err, image) {
+        console.log("** File Upload");
+        if (err) { console.log(err) }
+        else {
+        console.log(`* ${image.public_id}`);
+        console.log(`* ${image.url}`);
+        User.findOne({ where: { id: req.params.id } })
+        .then(user => {
+            if(user) {
+                user.update({
+                    image_path: image.url
+                }).then(updatedUser => {
+                    return res.json(updatedUser);
+                })
+            }
+        }).catch(err => {
+            console.log(err);
+            return res.status(403).json({message:"error", err});
+        })
+        }
+    })
+})
 
+//TODO: add token auth, none currently for insomnia testing
+router.post("/friends/:myid/:friendid", (req, res) =>{
+User.findOne({where: {id: req.params.myid}})
+.then(userData => {
+    userData.addFriend(req.params.friendid)
+    return res.json(userData);
+}).catch(err => {
+    console.log(err);
+    return res.status(403).json({message:"error", err});
+})
+})
+module.exports = router;
