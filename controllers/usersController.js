@@ -5,11 +5,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const tokenAuth = require('../middleware/tokenAuth');
 const cloudinary = require('cloudinary').v2;
+const env = require('dotenv')
 
 cloudinary.config({
-    cloud_name: 'hygge',
-    api_key: '763735274536799',
-    api_secret: 'f6ac1F4B1KQ5lGOuf4v2-jkwxJQ'
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API,
+    api_secret: process.env.CLOUD_SECRET,
 })
 
 router.post("/signup", (req, res) => {
@@ -143,13 +144,14 @@ router.put("/profilepic/:id", (req, res) => {
 })
 
 //TODO: add token auth, none currently for insomnia testing
-// router.post("/friends/:miyid/:friendid", (req, res) =>{
-// User.findOne({where: {id: req.params.myid}}).setfriend(req.params.friendid)
-// .then(userData => {
-//     return res.json(userData);
-// }).catch(err => {
-//     console.log(err);
-//     return res.status(403).json({message:"error", err});
-// })
-// })
+router.post("/friends/:myid/:friendid", (req, res) =>{
+User.findOne({where: {id: req.params.myid}})
+.then(userData => {
+    userData.addFriend(req.params.friendid)
+    return res.json(userData);
+}).catch(err => {
+    console.log(err);
+    return res.status(403).json({message:"error", err});
+})
+})
 module.exports = router;
