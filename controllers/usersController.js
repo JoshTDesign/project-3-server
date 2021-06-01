@@ -63,12 +63,8 @@ router.post("/login", (req, res) => {
     })
 })
 
-<<<<<<< HEAD
-router.get("/dashboard",tokenAuth, (req, res) => {
-=======
 
 router.get("/dashboard/:id",tokenAuth, (req, res) => {
->>>>>>> develop
 
  Trip.findAll({
             include: [
