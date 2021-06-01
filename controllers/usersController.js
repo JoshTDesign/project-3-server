@@ -14,9 +14,10 @@ cloudinary.config({
 })
 
 router.post("/signup", (req, res) => {
+    console.log(req.body);
     User.create({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        first_name: req.body.firstName,
+        last_name: req.body.lastName,
         location: req.body.location,
         username: req.body.username,
         password: req.body.password,
@@ -119,7 +120,8 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
             },  
             {model: Activity},
         ],
-
+    })
+}),
 //TODO: add token auth, none currently for insomnia testing
 router.get("/friends/:id", (req, res) =>{
 
@@ -144,10 +146,6 @@ router.get("/friends/:id", (req, res) =>{
         return res.status(403).json({message:"error", err});
     })
 });
-
-module.exports = router;
-
-})
 
 router.put("/profilepic/:id", (req, res) => {
     console.log(req.body);
