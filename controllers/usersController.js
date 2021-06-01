@@ -73,13 +73,14 @@ router.get("/profile", tokenAuth, (req, res) => {
 
 router.get("/dashboard",tokenAuth, (req, res) => {
 
+
  Trip.findAll({
             include: [
                 {
                     model: User,
                     through: {
                         where: {
-                            user_id: 1,
+                            user_id: req.params.id,
                         }
                     },
                     as: "Trips",
@@ -95,6 +96,7 @@ router.get("/dashboard",tokenAuth, (req, res) => {
 
 })
 
+
 router.get("/dashboard/:id", tokenAuth, (req, res) => {
     Trip.findAll({
         include: [
@@ -109,6 +111,24 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
             },  
             {model: Activity},
         ],
+
+//TODO: add token auth, none currently for insomnia testing
+router.get("/friends/:id", (req, res) =>{
+
+    User.findOne({
+        where: {id : req.params.id},
+
+        include: [
+            {
+            model: User,
+            through: {
+                where: {
+                    user_id: req.params.id,
+                }
+            },
+            as: 'friend',
+        }]
+      
     }).then(userData => {
         return res.json(userData);
     }).catch(err => {
@@ -118,3 +138,18 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
 });
 
 module.exports = router;
+
+})
+
+//TODO: add token auth, none currently for insomnia testing
+// router.post("/friends/:miyid/:friendid", (req, res) =>{
+// User.findOne({where: {id: req.params.myid}}).setfriend(req.params.friendid)
+// .then(userData => {
+//     return res.json(userData);
+// }).catch(err => {
+//     console.log(err);
+//     return res.status(403).json({message:"error", err});
+// })
+// })
+// module.exports = router;
+
