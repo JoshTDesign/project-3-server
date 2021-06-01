@@ -30,7 +30,7 @@ router.get("/:id",tokenAuth,(req,res)=>{
 router.post("/",tokenAuth,(req,res)=>{
     console.log('tripsController: ', req.body);
     Trip.create({
-        name:req.body.name,
+        name:req.body.tripName,
         city:req.body.city,
         state:req.body.state,
         country:req.body.country,
@@ -39,7 +39,7 @@ router.post("/",tokenAuth,(req,res)=>{
         cost:req.body.cost,
         start_date:req.body.start_date,
         end_date:req.body.end_date,
-        userId:req.body.user.id
+        userId:req.user.id
     }).then(trip=>{
         res.json(trip)
     }).catch(err=>{
