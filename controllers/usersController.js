@@ -14,9 +14,10 @@ cloudinary.config({
 })
 
 router.post("/signup", (req, res) => {
+    console.log(req.body);
     User.create({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        first_name: req.body.firstName,
+        last_name: req.body.lastName,
         location: req.body.location,
         username: req.body.username,
         password: req.body.password,
@@ -163,8 +164,11 @@ router.get("/friends/:id", (req, res) =>{
     })
 });
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5e6b74193a1099f933336c287764e67b09ad57fe
 router.put("/profilepic/:id", (req, res) => {
     console.log(req.body);
     cloudinary.uploader.upload(req.body.image, {tags: 'profile_pic'}, function (err, image) {
