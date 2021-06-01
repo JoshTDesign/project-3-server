@@ -118,7 +118,8 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
                 as: "Trips",
             },  
             {model: Activity},
-        ],
+        ],})
+    })
 
 //TODO: add token auth, none currently for insomnia testing
 router.get("/friends/:id", (req, res) =>{
@@ -145,9 +146,7 @@ router.get("/friends/:id", (req, res) =>{
     })
 });
 
-module.exports = router;
 
-})
 
 router.put("/profilepic/:id", (req, res) => {
     console.log(req.body);
