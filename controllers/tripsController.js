@@ -79,9 +79,11 @@ router.delete("/:id/:userId",tokenAuth,(req,res)=>{
             id:req.params.id
         }
     }).then(trip=>{
-        if(trip.userId !== req.user.id){
+        console.log(trip.userId, req.params.userId);
+        if(trip.userId != req.params.userId){
             return res.status(403).json({message:"Invalid Trip!"})
         }
+        console.log("confirmed correct trip/user, deleting");
         Trip.destroy({
             where:{
                 id:req.params.id
