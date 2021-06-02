@@ -16,7 +16,7 @@ const tokenAuth= (req,res,next)=>{
             }
         })
     } else {
-        return res.status(403).json({message:"auth falied"})
+        return res.status(403).json({message:"auth failed"})
     }
 }
 

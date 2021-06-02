@@ -37,7 +37,7 @@ router.post("/",tokenAuth,(req,res)=>{
       start_time:req.body.start_time,
       end_time:req.body.end_time,
       UserId:req.user.id,
-      TripId:req.body.tripId
+      tripId:req.body.tripId
   }).then(activity=>{
       res.json(activity)
   }).catch(err=>{
