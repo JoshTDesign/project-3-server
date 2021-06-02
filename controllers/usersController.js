@@ -111,20 +111,6 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
             id: req.params.id,
         },
         include: [
-<<<<<<< HEAD
-            {
-                model: User,
-                through: {
-                    where: {
-                        user_id: req.params.id,
-                    }
-                },
-                as: "Trips",
-            },  
-            {model: Activity},
-        ],})
-    })
-=======
            {model: Trip,
             as: "creator"
         }
@@ -137,7 +123,6 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
         return res.status(403).json({message:"error", err});
     })
     });
->>>>>>> 26074a6a50350e1045fe5d74067af3db3bc5320e
 
 //TODO: add token auth, none currently for insomnia testing
 router.get("/friends/:id", (req, res) =>{
@@ -164,11 +149,6 @@ router.get("/friends/:id", (req, res) =>{
     })
 });
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 5e6b74193a1099f933336c287764e67b09ad57fe
 router.put("/profilepic/:id", (req, res) => {
     console.log(req.body);
     cloudinary.uploader.upload(req.body.image, {tags: 'profile_pic'}, function (err, image) {

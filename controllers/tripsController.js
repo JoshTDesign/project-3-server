@@ -73,13 +73,13 @@ router.put("/:id",tokenAuth,(req,res)=>{
         })
     })
 })
-router.delete("/:id",tokenAuth,(req,res)=>{
+router.delete("/:id/:userId",tokenAuth,(req,res)=>{
     Trip.findOne({
         where:{
             id:req.params.id
         }
     }).then(trip=>{
-        if(trip.UserId!== req.user.id){
+        if(trip.userId !== req.user.id){
             return res.status(403).json({message:"Invalid Trip!"})
         }
         Trip.destroy({
