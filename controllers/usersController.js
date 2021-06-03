@@ -124,8 +124,7 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
     })
     });
 
-//TODO: add token auth, none currently for insomnia testing
-router.get("/friends/:id", (req, res) =>{
+router.get("/friends/:id", tokenAuth,  (req, res) =>{
 
     User.findOne({
         where: {id : req.params.id},
@@ -149,7 +148,7 @@ router.get("/friends/:id", (req, res) =>{
     })
 });
 
-router.put("/profilepic/:id", (req, res) => {
+router.put("/profilepic/:id", tokenAuth,  (req, res) => {
     console.log(req.body);
     cloudinary.uploader.upload(req.body.image, {tags: 'profile_pic'}, function (err, image) {
         console.log("** File Upload");
@@ -174,8 +173,7 @@ router.put("/profilepic/:id", (req, res) => {
     })
 })
 
-//TODO: add token auth, none currently for insomnia testing
-router.post("/friends/:myid/:friendid", (req, res) =>{
+router.post("/friends/:myid/:friendid", tokenAuth,  (req, res) =>{
 User.findOne({where: {id: req.params.myid}})
 .then(userData => {
     userData.addFriend(req.params.friendid)
@@ -185,4 +183,40 @@ User.findOne({where: {id: req.params.myid}})
     return res.status(403).json({message:"error", err});
 })
 })
+
+router.get("/getByEmail/:email", tokenAuth, (req,res) => {
+    User.findOne({where: {email: req.params.email}})
+    .then(user => {
+        if(user) {
+            return res.json(user);
+        } else {
+            return res.json({message: "no matching email found"});
+        }
+    }).catch(err =>{
+        console.log(err);
+        return res.status(403).json({message:"error", err});
+    })
+})
+
+router.put("/edit/:id", tokenAuth,  (req, res) => {
+
+    User.findOne({ where: { id: req.params.id } })
+    .then(user => {
+        if(user) {
+            user.update({
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            username: req.body.username,
+            location: req.body.location,
+            }).then(updatedUser => {
+                return res.json(updatedUser);
+            })
+        }
+    }).catch(err => {
+        console.log(err);
+        return res.status(403).json({message:"error", err});
+    })
+});
+
 module.exports = router;
