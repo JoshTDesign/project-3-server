@@ -199,7 +199,6 @@ router.get("/getByEmail/:email", tokenAuth, (req,res) => {
 })
 
 router.put("/edit/:id", tokenAuth,  (req, res) => {
-
     User.findOne({ where: { id: req.params.id } })
     .then(user => {
         if(user) {
