@@ -29,6 +29,9 @@ router.get("/",(req,res)=>{
           name:req.body.name,
           cost:req.body.cost,
           participants:req.body.participants,
+          userId:req.user.id,
+          tripId:req.body.tripId,
+
       }).then (expense=>{
           res.json(expense)
       }).catch(err=>{

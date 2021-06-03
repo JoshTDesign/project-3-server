@@ -16,5 +16,5 @@ router.use(userRoutes);
 router.use("/api/trips", tripsRoutes);
 router.use("/api/activities", activitiesRoutes);
 router.use("/api/access", accessRoutes);
-router.use("api/expenses", expensesRoutes);
+router.use("/api/expenses", expensesRoutes);
 module.exports = router;
