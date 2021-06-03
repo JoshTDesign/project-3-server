@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Trip, Activity} = require('../models');
+const {Trip, Activity, User} = require('../models');
 const tokenAuth = require("../middleware/tokenAuth")
 
 router.get("/",tokenAuth,(req,res)=>{
@@ -95,5 +95,37 @@ router.delete("/:id/:userId",tokenAuth,(req,res)=>{
         })
     })
 })
+router.put("/addUser/:tripId/:userId", (req, res) =>{
+    Trip.findOne({where: {id: req.params.tripId}})
+    .then(tripData => {
+        tripData.addTrips(req.params.userId);
+        return res.json(tripData);
+    }).catch(err => {
+        console.log(err);
+        return res.status(403).json({message:"error", err});
+    })
+    })
+
+
+    router.get("/allUsers/:tripId",(req,res) => {
+        Trip.findOne({
+            where: {
+                id: req.params.tripId,
+            },
+            include: [
+                {model: User, 
+                    through: "tripUser",
+                    as: "Trips"
+                }
+            ]
+        }).then(userData => {
+            res.json(userData);
+        })
+
+    })
+    module.exports = router;
+    
+    
+
 
 module.exports = router;
