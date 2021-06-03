@@ -25,6 +25,7 @@ const expenseData =[
         participants: 'Gojo',
         expenseId: 4,
     },
+    
 ];
 
 const seedExpense = () => Expense.bulkCreate(expenseData);
