@@ -19,6 +19,10 @@ Expense.init(
       type: DataTypes.DECIMAL,
       allowNull: true,
     },
+    participants: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    }
   },
   {
     sequelize,

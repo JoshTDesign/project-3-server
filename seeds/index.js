@@ -1,6 +1,7 @@
 const seedUser = require('./user-seeds');
 const seedTrip = require('./trip-seeds');
 const seedActivity = require('./activity-seeds');
+const seedExpense = require('./expense-seeds');
 
 const sequelize = require('../config/connection');
 
@@ -19,6 +20,9 @@ const seedAll = async () => {
 
     await seedActivity();
     console.log('\n----- ACTIVITY SEEDED -----\n');
+
+    await seedExpense();
+    console.log('\n----- USERS SEEDED -----\n');
 
 
     //process.exit(0);

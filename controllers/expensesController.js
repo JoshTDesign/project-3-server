@@ -28,6 +28,7 @@ router.get("/",(req,res)=>{
       Expense.create({
           name:req.body.name,
           cost:req.body.cost,
+          participants:req.body.participants,
       }).then (expense=>{
           res.json(expense)
       }).catch(err=>{
@@ -48,6 +49,7 @@ router.get("/",(req,res)=>{
         Expense.update({
             name:req.body.name,
             cost:req.body.cost,
+            participants:req.body.participants,
         },{
             where:{
                 id:req.params.id
