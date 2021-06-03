@@ -132,11 +132,6 @@ router.get("/friends/:id", tokenAuth,  (req, res) =>{
         include: [
             {
             model: User,
-            through: {
-                where: {
-                    user_id: req.params.id,
-                }
-            },
             as: 'friend',
         }]
       
