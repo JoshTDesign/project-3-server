@@ -199,19 +199,11 @@ router.get("/getByEmail/:email", tokenAuth, (req,res) => {
 })
 
 router.put("/edit/:id", tokenAuth,  (req, res) => {
-    User.findOne({ where: { id: req.params.id } })
+    console.log('req.body: ', req.body)
+    console.log('req.params: ',req.params)
+    User.update(req.body, { where: { id: req.params.id } })
     .then(user => {
-        if(user) {
-            user.update({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email: req.body.email,
-            username: req.body.username,
-            location: req.body.location,
-            }).then(updatedUser => {
-                return res.json(updatedUser);
-            })
-        }
+                return res.json(user);
     }).catch(err => {
         console.log(err);
         return res.status(403).json({message:"error", err});
