@@ -73,15 +73,15 @@ router.put("/:id",tokenAuth,(req,res)=>{
       })
   })
 })
-router.delete("/:id",tokenAuth,(req,res)=>{
+router.delete("/:id/:userId",tokenAuth,(req,res)=>{
   Activity.findOne({
       where:{
           id:req.params.id
       }
   }).then(activity=>{
-      if(activity.UserId!== req.user.id){
-          return res.status(403).json({message:"Invalid Activity!"})
-      }
+    //   if(activity.UserId !== req.user.id){
+    //       return res.status(403).json({message:"Invalid Activity!"})
+    //   }
       Activity.destroy({
           where:{
               id:req.params.id
