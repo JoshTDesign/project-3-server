@@ -110,11 +110,14 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
         where: {
             id: req.params.id,
         },
+  
         include: [
-           {model: Trip,
-            as: "creator"
-        }
-        ]
+           {
+            model: Trip,
+            as: "creator",
+        } 
+    ],
+    order: [["creator", 'start_date', 'ASC']],
 
     }).then(userData => {
         return res.json(userData);
