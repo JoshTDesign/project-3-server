@@ -3,6 +3,7 @@ const router = express.Router();
 const {Activity} = require("../models");
 const tokenAuth = require("../middleware/tokenAuth")
 
+//get all actitivies saved in the database
 router.get("/",(req,res)=>{
   Activity.findAll().then(activities=>{
       res.json(activities)
@@ -12,12 +13,12 @@ router.get("/",(req,res)=>{
   })
 })
 
+//get a specific activity by its ID
 router.get("/:id",(req,res)=>{
   Activity.findOne({
       where:{
           id:req.params.id
-      },
-    order: [[ 'activity_date', 'ASC']],
+      }
   }).then(activity=>{
       res.json(activity)
   }).catch(err=>{
@@ -25,6 +26,7 @@ router.get("/:id",(req,res)=>{
       res.status(500).json({message:"error",err})
   })
 })
+//create a new activity
 router.post("/",tokenAuth,(req,res)=>{
   Activity.create({
       activityName:req.body.activityName,
@@ -46,7 +48,7 @@ router.post("/",tokenAuth,(req,res)=>{
       res.status(500).json({message:"error",err})
   })
 })
-
+//update an activity, make sure it belongs to that user first
 router.put("/:id",tokenAuth,(req,res)=>{
   Activity.findOne({
       where:{
@@ -74,15 +76,13 @@ router.put("/:id",tokenAuth,(req,res)=>{
       })
   })
 })
+//delete an activity based on its ID
 router.delete("/:id/:userId",tokenAuth,(req,res)=>{
   Activity.findOne({
       where:{
           id:req.params.id
       }
   }).then(activity=>{
-    //   if(activity.UserId !== req.user.id){
-    //       return res.status(403).json({message:"Invalid Activity!"})
-    //   }
       Activity.destroy({
           where:{
               id:req.params.id

@@ -8,8 +8,7 @@ const accessRoutes = require('./accessController');
 
 
 router.get('/', (req, res) => {
-    res.send("welcome home!");
-    // res.sendFile(path.join(__dirname, "../client/public/index.html"));
+    res.send("Welcome to the Rally Travel API!");
 });
 
 router.use(userRoutes);

@@ -7,12 +7,14 @@ const tokenAuth = require('../middleware/tokenAuth');
 const cloudinary = require('cloudinary').v2;
 const env = require('dotenv')
 
+//establish cloudinary configuration for use uploading images
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.CLOUD_API,
     api_secret: process.env.CLOUD_SECRET,
 })
 
+//create a new user account and store the information as a JWT
 router.post("/signup", (req, res) => {
     console.log(req.body);
     User.create({
@@ -39,7 +41,7 @@ router.post("/signup", (req, res) => {
         res.status(500).json({ message: "an error occured", err })
     })
 })
-
+//login in to a current user account, verify encrypted password
 router.post("/login", (req, res) => {
     User.findOne({
         where: {
@@ -71,46 +73,16 @@ router.post("/login", (req, res) => {
         res.status(500).json({ message: "an error occured", err })
     })
 })
-
-router.get("/secretclub", tokenAuth,(req, res) => {
-    res.json(req.user);
-});
-
+//get current user information based on the supplied JWT
 router.get("/profile", tokenAuth, (req, res) => {
     res.json(req.user)
 });
-
-router.get("/dashboard",tokenAuth, (req, res) => {
-
-
- Trip.findAll({
-            include: [
-                {
-                    model: User,
-                    through: {
-                        where: {
-                            user_id: req.params.id,
-                        }
-                    },
-                    as: "Trips",
-                },  
-                {model: Activity},
-            ],
-        }).then(userData => {
-            return res.json(userData);
-        }).catch(err => {
-            console.log(err);
-            return res.status(403).json({message:"error", err});
-        })
-
-})
-
+//return all the trips associated with the supplied user ID, sort by date
 router.get("/dashboard/:id", tokenAuth, (req, res) => {
     User.findOne({
         where: {
             id: req.params.id,
         },
-  
         include: [
            {
             model: Trip,
@@ -118,7 +90,6 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
         } 
     ],
     order: [["creator", 'start_date', 'ASC']],
-
     }).then(userData => {
         return res.json(userData);
     }).catch(err => {
@@ -126,18 +97,15 @@ router.get("/dashboard/:id", tokenAuth, (req, res) => {
         return res.status(403).json({message:"error", err});
     })
     });
-
+//find all friends associated with a given userID
 router.get("/friends/:id", tokenAuth,  (req, res) =>{
-
     User.findOne({
         where: {id : req.params.id},
-
         include: [
             {
             model: User,
             as: 'friend',
         }]
-      
     }).then(userData => {
         return res.json(userData);
     }).catch(err => {
@@ -145,7 +113,7 @@ router.get("/friends/:id", tokenAuth,  (req, res) =>{
         return res.status(403).json({message:"error", err});
     })
 });
-
+//upload a profile picture using cloudinary api and update the image_path in the user model
 router.put("/profilepic/:id", tokenAuth,  (req, res) => {
     console.log(req.body);
     cloudinary.uploader.upload(req.body.image, {tags: 'profile_pic'}, function (err, image) {
@@ -170,7 +138,7 @@ router.put("/profilepic/:id", tokenAuth,  (req, res) => {
         }
     })
 })
-
+//add a new friend by their ID to the supplied user ID
 router.post("/friends/:myid/:friendid", tokenAuth,  (req, res) =>{
 User.findOne({where: {id: req.params.myid}})
 .then(userData => {
@@ -181,7 +149,7 @@ User.findOne({where: {id: req.params.myid}})
     return res.status(403).json({message:"error", err});
 })
 })
-
+//find user based on their email address
 router.get("/getByEmail/:email", tokenAuth, (req,res) => {
     User.findOne({where: {email: req.params.email}})
     .then(user => {
@@ -195,7 +163,7 @@ router.get("/getByEmail/:email", tokenAuth, (req,res) => {
         return res.status(403).json({message:"error", err});
     })
 })
-
+//edit a user based on their ID
 router.put("/edit/:id", tokenAuth,  (req, res) => {
     console.log('req.body: ', req.body)
     console.log('req.params: ',req.params)
