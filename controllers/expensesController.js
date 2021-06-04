@@ -11,7 +11,19 @@ router.get("/",(req,res)=>{
         res.status(500).json({message:"error",err})
     })
   })
-  
+  router.get("/trip/:tripId",(req,res)=>{
+      Expense.findAll({
+          where:{
+              tripId: req.params.tripId
+          }
+      }).then(expenses=>{
+          res.json(expenses)
+      }).catch(err=>{
+        console.log(err);
+        res.status(500).json({message:"error",err})
+  })
+})
+
   router.get("/:id",(req,res)=>{
     Expense.findOne({
         where:{
