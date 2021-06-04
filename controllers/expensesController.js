@@ -77,13 +77,15 @@ router.get("/",(req,res)=>{
     })
 })
 
-  router.delete("/id", tokenAuth,(req,res)=>{
+  router.delete("/:id", tokenAuth,(req,res)=>{
       Expense.findOne({
           where:{
               id:req.params.id
           }
       }).then (expense=>{
-          if(expense.UserId!== req.user.id){
+        console.log(expense) 
+        console.log(req.user)
+        if(expense.userId!== req.user.id){
             return res.status(403).json({message:"Invalid Expense!"})
         }
         Expense.destroy({
