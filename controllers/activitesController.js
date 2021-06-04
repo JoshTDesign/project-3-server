@@ -16,7 +16,8 @@ router.get("/:id",(req,res)=>{
   Activity.findOne({
       where:{
           id:req.params.id
-      }
+      },
+    order: [[ 'activity_date', 'ASC']],
   }).then(activity=>{
       res.json(activity)
   }).catch(err=>{
